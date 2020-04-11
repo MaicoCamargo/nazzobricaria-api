@@ -21,8 +21,13 @@ public class ProdutoController {
         this.repository = produtoRepository;
     }
 
+    @GetMapping
+    public List<Produto> getAll() {
+        return repository.findAll();
+    }
+
     @GetMapping("{id}")
-    public Optional<Produto> getAll(@PathVariable int id) {
+    public Optional<Produto> getById(@PathVariable int id) {
         return repository.findById(id);
     }
 
