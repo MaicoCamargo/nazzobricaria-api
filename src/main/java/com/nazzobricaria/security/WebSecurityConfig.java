@@ -18,10 +18,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+
                 .antMatchers(HttpMethod.GET, "/produto").permitAll()
                 .antMatchers(HttpMethod.GET, "/produto/{id}").permitAll()
                 .antMatchers(HttpMethod.GET, "/produto/usuario/{id}").permitAll()
+
                 .antMatchers(HttpMethod.GET, "/usuario").permitAll()
+                .antMatchers(HttpMethod.GET, "/usuario/{id}").permitAll()
                 .anyRequest().authenticated()
                 .and()
 
