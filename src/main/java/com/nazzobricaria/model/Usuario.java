@@ -2,9 +2,11 @@ package com.nazzobricaria.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Usuario {
+    /*link @JoinTable: http://fruzenshtein.com/hibernate-join-table-intermediary/*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usuario_ID")
@@ -15,9 +17,17 @@ public class Usuario {
     private String cpf;
     @ManyToOne
     private Endereco endereco;
+    private Date ultimoAcesso;
+    private String password;
     private Date criadoEm;
     private Date editadoEm;
-    private Date ultimoAcesso;
+    private boolean ativo;
+
+    @ManyToMany
+    @JoinTable(name = "usuario_permissao",
+            joinColumns = {@JoinColumn(name = "idUsuario", referencedColumnName = "usuario_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "idPermissao", referencedColumnName = "permissao_ID")})
+    private List<Permissao> permissoes;
 
     public Usuario() {
     }
@@ -94,6 +104,31 @@ public class Usuario {
         this.ultimoAcesso = ultimoAcesso;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public List<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<Permissao> permissoes) {
+        this.permissoes = permissoes;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -103,9 +138,12 @@ public class Usuario {
                 ", email='" + email + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", endereco=" + endereco +
+                ", ultimoAcesso=" + ultimoAcesso +
+                ", password='" + password + '\'' +
                 ", criadoEm=" + criadoEm +
                 ", editadoEm=" + editadoEm +
-                ", ultimoAcesso=" + ultimoAcesso +
+                ", ativo=" + ativo +
+                ", permissoes=" + permissoes +
                 '}';
     }
 }
