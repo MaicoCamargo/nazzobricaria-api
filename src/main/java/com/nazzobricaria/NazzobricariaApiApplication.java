@@ -1,14 +1,16 @@
 package com.nazzobricaria;
 
+import com.nazzobricaria.model.Permissao;
 import com.nazzobricaria.model.Usuario;
 import com.nazzobricaria.repository.UsuarioRepository;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.stream.LongStream;
 
 @SpringBootApplication
 public class NazzobricariaApiApplication {
@@ -17,25 +19,29 @@ public class NazzobricariaApiApplication {
 		SpringApplication.run(NazzobricariaApiApplication.class, args);
 	}
 
-	@Bean
-	CommandLineRunner init(UsuarioRepository usuarioRepository) {
-		return args -> {
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
-			usuarioRepository.deleteAll();
-			LongStream.range(1, 4)
-					.mapToObj(i -> {
-						Usuario usuario = new Usuario();
-						usuario.setNome("nome " + i);
-						usuario.setSobrenome("sobrenome " + i);
-						usuario.setEmail("email@" + i);
-						usuario.setCpf("09865434232");
-						usuario.setCriadoEm(new Date());
-						usuario.setEditadoEm(new Date());
-						return usuario;
-					})
-					.map(usuarioRepository::save)
-					.forEach(System.out::println);
+	@Autowired
+	private UsuarioRepository userRepository;
 
-		};
+	@PostConstruct
+	public void init(){
+
+		Usuario usuario = new Usuario();
+		usuario.setNome("nome_init ");
+		usuario.setSobrenome("sobrenome_init ");
+		usuario.setEmail("email@_init");
+		usuario.setCpf("09865434232");
+		usuario.setPassword(passwordEncoder.encode("1234"));
+		usuario.setCriadoEm(new Date());
+		usuario.setEditadoEm(new Date());
+//		usuario.setPermissoes(Arrays.asList(
+//				new Permissao("ROLE_USER"),
+//				new Permissao("ROLE_ADMIN")));
+
+		if (userRepository.findByEmail(usuario.getEmail()) == null){
+			userRepository.save(usuario);
+		}
 	}
 }

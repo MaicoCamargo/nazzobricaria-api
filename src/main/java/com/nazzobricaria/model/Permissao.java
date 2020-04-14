@@ -1,8 +1,5 @@
 package com.nazzobricaria.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.ManyToAny;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,20 +12,11 @@ public class Permissao {
     private int permissaoID;
     private String permissao;
 
-    @JsonIgnore
-    @ManyToMany()
-    @JoinTable(name = "usuario_permissao",
-            joinColumns = {@JoinColumn(name = "idPermissao",referencedColumnName = "permissao_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "idUsuario", referencedColumnName = "usuario_ID")})
-    private List<Usuario> usuarios;
-
     public Permissao() {
     }
 
-    public Permissao(int permissaoID, String permissao, List<Usuario> usuarios) {
-        this.permissaoID = permissaoID;
+    public Permissao(String permissao) {
         this.permissao = permissao;
-        this.usuarios = usuarios;
     }
 
     public int getPermissaoID() {
@@ -47,20 +35,11 @@ public class Permissao {
         this.permissao = permissao;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
-
-    /*@Override
+    @Override
     public String toString() {
         return "Permissao{" +
                 "permissaoID=" + permissaoID +
                 ", permissao='" + permissao + '\'' +
-                ", usuarios=" + usuarios +
                 '}';
-    }*/
+    }
 }

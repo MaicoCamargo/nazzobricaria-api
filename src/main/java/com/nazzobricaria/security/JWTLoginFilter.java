@@ -1,6 +1,7 @@
 package com.nazzobricaria.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nazzobricaria.model.Usuario;
 import org.aspectj.weaver.bcel.BcelRenderer;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,12 +28,11 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
 
-        AccountCredentials credentials = new ObjectMapper()
-                .readValue(request.getInputStream(), AccountCredentials.class);
-        System.out.println(credentials);
+        Usuario credentials = new ObjectMapper()
+                .readValue(request.getInputStream(), Usuario.class);
         return getAuthenticationManager().authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        credentials.getUsername(),
+                        credentials.getEmail(),
                         credentials.getPassword(),
                         Collections.emptyList()
                 )

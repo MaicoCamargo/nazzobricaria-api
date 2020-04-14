@@ -18,9 +18,9 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public List<Usuario> findAll(){
-        System.out.println(repository.findAll());
-        return repository.findAll();
+    public Usuario findAll(){
+        System.out.println(repository.findByEmail("email@1"));
+        return repository.findByEmail("email@1");
     }
 
     @GetMapping("/{id}")

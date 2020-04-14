@@ -1,6 +1,7 @@
 package com.nazzobricaria.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Usuario {
     @JoinTable(name = "usuario_permissao",
             joinColumns = {@JoinColumn(name = "idUsuario", referencedColumnName = "usuario_ID")},
             inverseJoinColumns = {@JoinColumn(name = "idPermissao", referencedColumnName = "permissao_ID")})
-    private List<Permissao> permissoes;
+    private Collection<Permissao> permissoes;
 
     public Usuario() {
     }
@@ -121,11 +122,11 @@ public class Usuario {
         this.ativo = ativo;
     }
 
-    public List<Permissao> getPermissoes() {
+    public Collection<Permissao> getPermissoes() {
         return permissoes;
     }
 
-    public void setPermissoes(List<Permissao> permissoes) {
+    public void setPermissoes(Collection<Permissao> permissoes) {
         this.permissoes = permissoes;
     }
 
