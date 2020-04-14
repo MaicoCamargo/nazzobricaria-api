@@ -15,6 +15,8 @@ import java.util.Date;
 @SpringBootApplication
 public class NazzobricariaApiApplication {
 
+	// https://dzone.com/articles/spring-boot-security-json-web-tokenjwt-hello-world
+	// https://memorynotfound.com/spring-boot-spring-security-hibernate-configuration-example/
 	public static void main(String[] args) {
 		SpringApplication.run(NazzobricariaApiApplication.class, args);
 	}
